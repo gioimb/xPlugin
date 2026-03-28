@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="assets/components.css">
+    <link rel="stylesheet" href="assets/template.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+</head>
+<body>
+    <header>
+        <div class="wrapper">
+            <div class="flex">
+                <div class="flex-container"><h1><span id="domain"></span></h1></div>
+                <div class="flex-container"><button class="ico-btn"><i class='bx bx-refresh'></i></button></div>
+            </div>
+            <span id="server_motd"></span>
+        </div>
+    </header>
+    <main>
+    <div id="app">
+        <div class="wrapper">
+            <h2>Server</h2>
+            <div class="slots">
+                <p>Aktuell sind <span id="usedSlots">-</span> von <span id="maxSlots">-</span> Spieler online</p>
+            </div>
+            <div class="performance">
+                <p>Server: <span id="ws_connect">wird verbunden</span></p>
+            </div>
+
+            <div class="player_stats">
+                <h2>Spieler Statistiken</h2>
+
+                <div class="table-container">
+                    <table id="player_stats">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Tode</th>
+                                <th>Spielzeit</th>
+                                <th>Zuletzt Online</th>
+                                <th>Online</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+    <script src="assets/app2.js"></script>
+
+</body>
+</html>

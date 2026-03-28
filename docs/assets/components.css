@@ -1,0 +1,87 @@
+::-webkit-scrollbar {
+    display: none;
+}
+
+.wrapper {
+  margin: 0 auto;
+  width: 90%;
+  max-width: 1000px;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ico-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+
+  transition: all 0.2s ease;
+  background: none;
+  font-size: 1.8rem;
+  color: white;
+  border-radius: var(--border-radius);
+  border: none;
+  cursor: pointer;
+}
+
+.ico-btn:hover {
+  background: #3b3f4bad;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.table-container {
+  overflow-x: scroll;
+  padding: 10px 0px;
+  
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table th {
+  text-align: start;
+  padding: 5px 10px;
+  /* border: 1px solid white; */
+text-wrap: nowrap;
+border-bottom: 1px solid #3b3f4bad;
+}
+
+table td {
+  padding: 13px 10px;
+  /* border: 0.5px solid var(--text-color-light); */
+  text-wrap: nowrap;
+}
+
+table td img{
+  width: 20px;
+
+  object-fit: contain;
+  display: block;
+  
+}
+
+tr:nth-child(even) {
+  background: #3b3f4bad;
+}
+
+.error{
+  color: var(--color-warning);
+}
+
+.success{
+  color: var(--color-success);
+}
+
+.warning{
+  color: red;
+}
