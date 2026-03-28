@@ -7,7 +7,7 @@ if (!host) {
 }
 
 document.getElementById("domain").innerHTML = host;
-const wsUrl = `ws://${host}:8080`;
+const wsUrl = `wss://${host}:8080`;
 
 const tbody = document.querySelector("#player_stats tbody");
 const statusSpan = document.getElementById("ws_connect");
