@@ -1,0 +1,4 @@
+name: xPlugin
+version: '1.0-SNAPSHOT'
+main: com.ericimbriaco.xPlugin.Main
+api-version: '1.21'
