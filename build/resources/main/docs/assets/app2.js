@@ -1,19 +1,20 @@
-const params = new URLSearchParams(window.location.search);
-const host = params.get("url");
+//const params = new URLSearchParams(window.location.search);
+//const host = params.get("url");
 
-if (!host) {
-    alert("Kein URL-Parameter angegeben, z. B. ?url=192.168.1.108");
-    throw new Error("Kein URL-Parameter angegeben");
-}
+//if (!host) {
+//  alert("Kein URL-Parameter angegeben, z. B. ?url=192.168.1.108");
+//  throw new Error("Kein URL-Parameter angegeben");
+//}
 
-document.getElementById("domain").innerHTML = host;
-const wsUrl = `wss://${host}:8080`;
+//document.getElementById("domain").innerHTML = host;
+const wsUrl = `ws://${location.hostname}:8082`;
 
 const tbody = document.querySelector("#player_stats tbody");
 const statusSpan = document.getElementById("ws_connect");
 
 const players = {};
 const playerRows = {};
+let ws;
 
 connectWebSocket();
 
@@ -50,9 +51,13 @@ function connectWebSocket() {
                 players[name] = {
                     name: name,
                     deaths: "",
+                    health: "",
+                    level: "",
+
                     playTime: "",
                     lastLogin: "",
-                    online: false
+                    online: false,
+                    mined_dirt: ""
                 };
 
                 createRow(name);
@@ -66,6 +71,8 @@ function connectWebSocket() {
 
             if (
                 payload.type === "deaths" ||
+                payload.type === "health" ||
+                payload.type === "level" ||
                 payload.type === "playTime" ||
                 payload.type === "lastLogin"
             ) {
@@ -107,10 +114,13 @@ function createRow(playerName) {
     tr.innerHTML = `
         <td class="col-id"></td>
         <td class="col-name"></td>
+        <td class="col-health"></td>
+        <td class="col-level"></td>
         <td class="col-deaths"></td>
         <td class="col-playtime"></td>
         <td class="col-lastlogin"></td>
         <td class="col-online"></td>
+
     `;
 
     tbody.appendChild(tr);
@@ -126,6 +136,10 @@ function updateRow(playerName) {
     if (!row) return;
 
     row.querySelector(".col-name").textContent = player.name || "-";
+    row.querySelector(".col-health").textContent =
+        player.health === "" || player.health == null ? "-" : player.health;
+    row.querySelector(".col-level").textContent =
+        player.level === "" || player.level == null ? "-" : player.level;
     row.querySelector(".col-deaths").textContent =
         player.deaths === "" || player.deaths == null ? "-" : player.deaths;
     row.querySelector(".col-playtime").textContent = formatPlayTime(player.playTime);

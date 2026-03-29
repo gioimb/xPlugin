@@ -13,7 +13,7 @@
     <header>
         <div class="wrapper">
             <div class="flex">
-                <div class="flex-container"><h1><span id="domain"></span></h1></div>
+                <div class="flex-container"><h1><span id="">Iboprofaxe.it</span></h1></div>
                 <div class="flex-container"><button class="ico-btn"><i class='bx bx-refresh'></i></button></div>
             </div>
             <span id="server_motd"></span>
@@ -23,11 +23,10 @@
     <div id="app">
         <div class="wrapper">
             <h2>Server</h2>
-            <div class="slots">
-                <p>Aktuell sind <span id="usedSlots">-</span> von <span id="maxSlots">-</span> Spieler online</p>
-            </div>
             <div class="performance">
-                <p>Server: <span id="ws_connect">wird verbunden</span></p>
+                <p>Aktuell sind <span id="usedSlots">-</span> von <span id="maxSlots">-</span> Spieler online</p>
+                <p>WS Status: <span id="ws_connect">wird verbunden</span></p>
+                <p>Server Version: <span id="server_version">wird verbunden</span></p>
             </div>
 
             <div class="player_stats">
@@ -39,6 +38,8 @@
                             <tr>
                                 <th>#</th>
                                 <th>Name</th>
+                                <th>Health</th>
+                                <th>Level</th>
                                 <th>Tode</th>
                                 <th>Spielzeit</th>
                                 <th>Zuletzt Online</th>

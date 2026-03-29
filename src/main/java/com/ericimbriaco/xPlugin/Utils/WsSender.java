@@ -1,6 +1,8 @@
 package com.ericimbriaco.xPlugin.Utils;
 
+import com.ericimbriaco.xPlugin.Main;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Statistic;
 
@@ -16,17 +18,20 @@ public class WsSender {
             long playtimeMinutes = playtimeTicks / 1200;
             int usedSlots = Bukkit.getServer().getOnlinePlayers().size();
             int maxSlots = Bukkit.getMaxPlayers();
-            String server_motd = Bukkit.getServer().getMotd();
+
 
             SimpleWsServer.send(escapeJson(player.getName()), "name", escapeJson(player.getName()));
             SimpleWsServer.send(escapeJson(player.getName()), "deaths", player.getStatistic(Statistic.DEATHS));
             SimpleWsServer.send(escapeJson(player.getName()), "playTime", playtimeMinutes);
             SimpleWsServer.send(escapeJson(player.getName()), "lastLogin", player.getLastPlayed());
             SimpleWsServer.send(escapeJson(player.getName()), "online", player.isOnline());
+            SimpleWsServer.send(escapeJson(player.getName()), "mined_dirt", player.getStatistic(Statistic.MINE_BLOCK, Material.DIRT));
 
             SimpleWsServer.send("server", "usedSlots", usedSlots);
             SimpleWsServer.send("server", "maxSlots", maxSlots);
-            SimpleWsServer.send("server", "server_motd", server_motd);
+            SimpleWsServer.send("server", "server_motd", Bukkit.getServer().getMotd());
+            SimpleWsServer.send("server", "server_ip", Main.global_server_name);
+            SimpleWsServer.send("server", "server_version", Bukkit.getServer().getVersion());
         }
     }
     private static String escapeJson(String text) {

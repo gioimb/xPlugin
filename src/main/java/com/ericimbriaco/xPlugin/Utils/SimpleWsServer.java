@@ -2,6 +2,7 @@ package com.ericimbriaco.xPlugin.Utils;
 
 import com.ericimbriaco.xPlugin.Main;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Statistic;
 import org.java_websocket.WebSocket;
@@ -10,6 +11,8 @@ import org.java_websocket.server.WebSocketServer;
 
 import java.net.InetSocketAddress;
 import java.util.Collection;
+
+import static org.bukkit.Bukkit.getServer;
 
 public class SimpleWsServer extends WebSocketServer {
 
@@ -26,23 +29,27 @@ public class SimpleWsServer extends WebSocketServer {
 
     @Override
     public void onStart() {
-        plugin.getLogger().info("WebSocket-Server gestartet auf Port " + getPort());
+        getServer().getConsoleSender().sendMessage(ErrorMessages.LOGO + "WebSocket Server gestartet auf Port: " + ChatColor.GOLD + getPort());
+
     }
 
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
-        plugin.getLogger().info("WS Client verbunden: " + conn.getRemoteSocketAddress());
+        getServer().getConsoleSender().sendMessage(ErrorMessages.LOGO + "WebSocket Client verbunden: " + ChatColor.GOLD + conn.getRemoteSocketAddress());
         send("server", "ws", "connected");
     }
 
     @Override
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
-        plugin.getLogger().info("WS Client getrennt: " + conn.getRemoteSocketAddress());
+        getServer().getConsoleSender().sendMessage(ErrorMessages.LOGO + "WebSocket Client getrennt: " + ChatColor.GOLD + conn.getRemoteSocketAddress());
+
+
     }
 
     @Override
     public void onMessage(WebSocket conn, String message) {
-        plugin.getLogger().info("Empfangen von WS Client: " + message);
+        getServer().getConsoleSender().sendMessage(ErrorMessages.LOGO + "WebSocket hat folgende Nachricht empfangen: " + ChatColor.GOLD + message);
+        //plugin.getLogger().info("Empfangen von WS Client: " + message);
         //conn.send("Minecraft hat empfangen: " + message);
 
         if (message.contains("\"action\":\"send_first_data\"")) { //{"action":"send_player_stats"}
@@ -53,7 +60,7 @@ public class SimpleWsServer extends WebSocketServer {
 
     @Override
     public void onError(WebSocket conn, Exception ex) {
-        plugin.getLogger().warning("WebSocket Fehler: " + ex.getMessage());
+        getServer().getConsoleSender().sendMessage(ErrorMessages.LOGO_Error + "WebSocket Fehler: " + ex.getMessage());
     }
 
     public void broadcastMessage(String message) {
@@ -91,6 +98,4 @@ public class SimpleWsServer extends WebSocketServer {
     public static SimpleWsServer getInstance() {
         return instance;
     }
-
-
 }
