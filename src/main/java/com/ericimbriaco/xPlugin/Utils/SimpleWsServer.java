@@ -35,20 +35,27 @@ public class SimpleWsServer extends WebSocketServer {
 
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
-        getServer().getConsoleSender().sendMessage(ErrorMessages.LOGO + "WebSocket Client verbunden: " + ChatColor.GOLD + conn.getRemoteSocketAddress());
-        send("server", "ws", "connected");
+        if(ConfigManager.getBoolean("WsServer.debug")) {
+            getServer().getConsoleSender().sendMessage(ErrorMessages.LOGO + "WebSocket Client verbunden: " + ChatColor.GOLD + conn.getRemoteSocketAddress());
+        }
+            send("server", "ws", "connected");
     }
 
     @Override
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
+        if(ConfigManager.getBoolean("WsServer.debug")){
         getServer().getConsoleSender().sendMessage(ErrorMessages.LOGO + "WebSocket Client getrennt: " + ChatColor.GOLD + conn.getRemoteSocketAddress());
+
+        }
 
 
     }
 
     @Override
     public void onMessage(WebSocket conn, String message) {
+        if(ConfigManager.getBoolean("WsServer.debug")){
         getServer().getConsoleSender().sendMessage(ErrorMessages.LOGO + "WebSocket hat folgende Nachricht empfangen: " + ChatColor.GOLD + message);
+        }
         //plugin.getLogger().info("Empfangen von WS Client: " + message);
         //conn.send("Minecraft hat empfangen: " + message);
 
@@ -78,6 +85,8 @@ public class SimpleWsServer extends WebSocketServer {
     }
 
     public static void send(String key, String type, Object value) {
+        if (!ConfigManager.getBoolean("WsServer.sendStats")) return;
+
         if (instance != null) {
             String valuePart;
 

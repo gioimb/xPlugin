@@ -26,7 +26,7 @@ public class WebServer {
     }
 
     public void start() throws IOException {
-        server = HttpServer.create(new InetSocketAddress("0.0.0.0", 8080), 0);
+        server = HttpServer.create(new InetSocketAddress("0.0.0.0", ConfigManager.getInt("WebServer.port")), 0);
         server.createContext("/", this::handleRequest);
         server.setExecutor(Executors.newCachedThreadPool());
         server.start();

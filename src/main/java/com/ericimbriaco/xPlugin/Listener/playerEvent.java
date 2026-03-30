@@ -1,6 +1,7 @@
 package com.ericimbriaco.xPlugin.Listener;
 
 import com.ericimbriaco.xPlugin.Main;
+import com.ericimbriaco.xPlugin.Utils.ConfigManager;
 import com.ericimbriaco.xPlugin.Utils.ErrorMessages;
 import com.ericimbriaco.xPlugin.Utils.SimpleWsServer;
 import com.ericimbriaco.xPlugin.Utils.WsSender;
@@ -29,13 +30,29 @@ public class playerEvent implements Listener {
     public void onPlayerJoinEvent(PlayerJoinEvent event){
         Player getPlayer = event.getPlayer();
         int usedSlots = Bukkit.getServer().getOnlinePlayers().size();
-        event.setJoinMessage(ChatColor.GREEN + "→ " + ChatColor.GRAY + getPlayer.getName());
+
+        if(ConfigManager.getBoolean("customJoinMessage.enable")){
+            String serverJoinMessage = ConfigManager.getString("customJoinMessage.message");
+            serverJoinMessage = serverJoinMessage.replace("%player%", getPlayer.getName());
+            serverJoinMessage = ChatColor.translateAlternateColorCodes('&', serverJoinMessage);
+            event.setJoinMessage(null); // Vanilla Join Message aus
+            Bukkit.broadcastMessage(serverJoinMessage);
+
+            //WelcomeMessage -> get from config
+            String welcomeMessage = ConfigManager.getString("customJoinMessage.welcomeMessage");
+            welcomeMessage = ChatColor.translateAlternateColorCodes('&', welcomeMessage);
+            getPlayer.sendMessage(welcomeMessage);
+        }
+
+        String tabListFooterMessage = ConfigManager.getString("tabList.footer");
+        tabListFooterMessage = tabListFooterMessage.replace("%servername%", ConfigManager.getString("serverName"));
+        tabListFooterMessage = ChatColor.translateAlternateColorCodes('&', tabListFooterMessage);
+        event.getPlayer().setPlayerListFooter(tabListFooterMessage);
+
+
         SimpleWsServer.send(getPlayer.getName(), "online", "true");
         SimpleWsServer.send(getPlayer.getName(), "lastLogin", getPlayer.getLastPlayed());
         SimpleWsServer.send("server", "usedSlots", usedSlots);
-        getPlayer.sendMessage(ChatColor.GRAY + "Visit Stats on:" + ChatColor.GOLD + "http://"+ Main.global_server_name + ":8080");
-
-        event.getPlayer().setPlayerListFooter(ChatColor.GRAY + "Du spielst auf " + ChatColor.GOLD + Main.global_server_name);
 
         int level = getPlayer.getLevel();
         SimpleWsServer.send(getPlayer.getName(), "level", level);
@@ -48,7 +65,15 @@ public class playerEvent implements Listener {
     public void onPlayerQuitEvent(PlayerQuitEvent event){
         Player getPlayer = event.getPlayer();
         int usedSlots = Bukkit.getServer().getOnlinePlayers().size();
-        event.setQuitMessage(ChatColor.RED + "← " + ChatColor.GRAY + getPlayer.getName());
+
+        if(ConfigManager.getBoolean("customQuitMessage.enable")){
+            String serverQuitMessage = ConfigManager.getString("customQuitMessage.message");
+            serverQuitMessage = serverQuitMessage.replace("%player%", getPlayer.getName());
+            serverQuitMessage = ChatColor.translateAlternateColorCodes('&', serverQuitMessage);
+            event.setQuitMessage(null); // Vanilla Join Message aus
+            Bukkit.broadcastMessage(serverQuitMessage);
+        }
+
         SimpleWsServer.send(getPlayer.getName(), "online", "false");
         SimpleWsServer.send("server", "usedSlots", usedSlots - 1);
         //WsSender.sendSlots();

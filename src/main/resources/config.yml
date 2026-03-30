@@ -1,0 +1,43 @@
+serverName: "iboprofaxe.it"
+
+# Color Codes examples: &6 -> Gold, &7 -> Gray, ...
+# Available placeholders:
+# %player%      -> Shows the Players Name
+# %servername%  -> Get the Servers Name
+# To insert a line break (new line), use \n.
+# Here you can set custom Join and Leave Message.
+customJoinMessage:
+  enable: true
+  message: "&a→ &7%player%"
+  welcomeMessage: "&7Visit Stats on &6http://iboprofaxe.it:8080"
+
+customQuitMessage:
+  enable: true
+  message: "&c← &7%player%"
+
+# TabList
+tabList:
+  header: ""
+  footer: "&7Du spielst auf &6%servername%"
+
+# Here you can set a custom MOTD (Message of the Day) for your server.
+# If disabled (false), the default MOTD from server.properties will be used.
+#
+# Maximum characters per line: ~45–50
+# Available placeholders: %servername%
+customMotd:
+  enable: true
+  top: "A Minecraft Server"
+  bottom: ""
+
+# To activate the web server, set "enable: true" and configure an open port. Do the same for the WebSocket server.
+# Note that stats can be sent to the interface when the web server and the websocket are running.
+WebServer:
+  enable: true       #default: true
+  port: 8080         #default: 8080
+
+WsServer:
+  enable: true      #default: true
+  port: 8082        #default: 8082
+  sendStats: true   #default: true
+  debug: true       #default: true

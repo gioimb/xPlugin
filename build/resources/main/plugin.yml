@@ -2,3 +2,32 @@ name: xPlugin
 version: '1.0-SNAPSHOT'
 main: com.ericimbriaco.xPlugin.Main
 api-version: '1.21'
+commands:
+  xplugin:
+    description: Get Plugin information
+    usage: /xPlugin
+    permission: xplugin.command.xplugin
+
+  heal:
+    description: Heal a Player
+    usage: /heal <Player>
+    permission: xplugin.command.heal
+
+  crash:
+    description: Kicks the player with a Java error message
+    usage: /crash [Player]
+    permission: xplugin.command.crash.others
+
+
+permissions:
+  xplugin.command.xplugin:
+    description: Get Plugin information
+    default: op
+
+  xplugin.command.heal:
+    description: Heal Command
+    default: op
+
+  xplugin.command.crash:
+    description: Kicks the player with a Java error message
+    default: op

@@ -29,8 +29,15 @@ public class WsSender {
 
             SimpleWsServer.send("server", "usedSlots", usedSlots);
             SimpleWsServer.send("server", "maxSlots", maxSlots);
-            SimpleWsServer.send("server", "server_motd", Bukkit.getServer().getMotd());
-            SimpleWsServer.send("server", "server_ip", Main.global_server_name);
+
+            if(ConfigManager.getBoolean("customMotd.enable")){
+                SimpleWsServer.send("server", "server_modtTop", ConfigManager.getString("customMotd.top"));
+                SimpleWsServer.send("server", "server_modtBottom", ConfigManager.getString("customMotd.bottom"));
+            }else{
+                SimpleWsServer.send("server", "server_modtTop", Bukkit.getServer().getMotd());
+            }
+
+            SimpleWsServer.send("server", "server_ip", ConfigManager.getString("serverName"));
             SimpleWsServer.send("server", "server_version", Bukkit.getServer().getVersion());
         }
     }

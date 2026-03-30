@@ -1,9 +1,8 @@
 package com.ericimbriaco.xPlugin;
 
 import com.ericimbriaco.xPlugin.Listener.playerEvent;
-import com.ericimbriaco.xPlugin.Utils.ErrorMessages;
-import com.ericimbriaco.xPlugin.Utils.SimpleWsServer;
-import com.ericimbriaco.xPlugin.Utils.WebServer;
+import com.ericimbriaco.xPlugin.Listener.serverEvent;
+import com.ericimbriaco.xPlugin.Utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -14,29 +13,40 @@ public final class Main extends JavaPlugin {
     private SimpleWsServer wsServer;
     private WebServer webServer;
 
+    private static Main instance;
+
     @Override
     public void onEnable() {
+        instance = this;
+        saveDefaultConfig();
         getServer().getConsoleSender().sendMessage(ErrorMessages.LOGO + "gestartet.");
         Bukkit.getPluginManager().registerEvents(new playerEvent(), this);
+        Bukkit.getPluginManager().registerEvents(new serverEvent(), this);
+        new commandManager(this);
 
-        try {
-           wsServer = new SimpleWsServer(8082, this);
-            getServer().getConsoleSender().sendMessage(ErrorMessages.LOGO + "WebSocket Server wird gestartet.");
-            wsServer.start();
-        } catch (Exception e) {
-            getServer().getConsoleSender().sendMessage(ErrorMessages.LOGO + "WebSocker Server konnte nicht gestartet werden: " + e.getMessage());
-            e.printStackTrace();
+        //WsServer
+        if(ConfigManager.getBoolean("WsServer.enable")){
+            try {
+                wsServer = new SimpleWsServer(ConfigManager.getInt("WsServer.port"), this);
+                getServer().getConsoleSender().sendMessage(ErrorMessages.LOGO + "WebSocket Server wird gestartet.");
+                wsServer.start();
+            } catch (Exception e) {
+                getServer().getConsoleSender().sendMessage(ErrorMessages.LOGO + "WebSocker Server konnte nicht gestartet werden: " + e.getMessage());
+                e.printStackTrace();
+            }
         }
 
-        webServer = new WebServer(this);
-
-        try {
-            webServer.start();
-        } catch (Exception e) {
-            getServer().getConsoleSender().sendMessage(ErrorMessages.LOGO_Error + "Webserver konnte nicht gestartet werden.");
-            e.printStackTrace();
+        if(ConfigManager.getBoolean("WebServer.enable")){
+            webServer = new WebServer(this);
+            try {
+                webServer.start();
+            } catch (Exception e) {
+                getServer().getConsoleSender().sendMessage(ErrorMessages.LOGO_Error + "Webserver konnte nicht gestartet werden.");
+                e.printStackTrace();
+            }
         }
     }
+
 
     @Override
     public void onDisable() {
@@ -53,6 +63,10 @@ public final class Main extends JavaPlugin {
         }
 
         getServer().getConsoleSender().sendMessage(ErrorMessages.LOGO + "gestoppt.");
+    }
+
+    public static Main getInstance() {
+        return instance;
     }
 
 }
