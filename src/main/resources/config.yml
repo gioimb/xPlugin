@@ -33,11 +33,17 @@ customMotd:
 # To activate the web server, set "enable: true" and configure an open port. Do the same for the WebSocket server.
 # Note that stats can be sent to the interface when the web server and the websocket are running.
 WebServer:
-  enable: true       #default: true
-  port: 8080         #default: 8080
+  enable: true       # default: true
+  port: 8080         # default: 8080
 
 WsServer:
-  enable: true      #default: true
-  port: 8082        #default: 8082
-  sendStats: true   #default: true
-  debug: true       #default: true
+  enable: true      # default: true
+  port: 8082        # default: 8082
+  sendStats: true   # default: true
+  debug: true       # default: true
+
+
+silkSpawner:            # Wenn die funktion aktiv kann jeder Spieler Spawner abbauen, wenn deaktiviert nur die mit Permssion
+  enable: true          # default: true
+  minMaterial: diamond  # min pickaxe matiel zum abbauen
+  dropChange: 100       # wahrscheinlicht das ein spwaner dropt
