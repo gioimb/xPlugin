@@ -19,6 +19,8 @@ public class WsSender {
             int usedSlots = Bukkit.getServer().getOnlinePlayers().size();
             int maxSlots = Bukkit.getMaxPlayers();
 
+            int playersMoney = ConfigManager.get().getInt(player.getUniqueId() + ".money");
+
 
             SimpleWsServer.send(escapeJson(player.getName()), "name", escapeJson(player.getName()));
             SimpleWsServer.send(escapeJson(player.getName()), "deaths", player.getStatistic(Statistic.DEATHS));
@@ -26,6 +28,8 @@ public class WsSender {
             SimpleWsServer.send(escapeJson(player.getName()), "lastLogin", player.getLastPlayed());
             SimpleWsServer.send(escapeJson(player.getName()), "online", player.isOnline());
             SimpleWsServer.send(escapeJson(player.getName()), "mined_dirt", player.getStatistic(Statistic.MINE_BLOCK, Material.DIRT));
+            SimpleWsServer.send(escapeJson(player.getName()), "mined_SPAWNER", player.getStatistic(Statistic.MINE_BLOCK, Material.SPAWNER));
+            SimpleWsServer.send(escapeJson(player.getName()), "money", playersMoney);
 
             SimpleWsServer.send("server", "usedSlots", usedSlots);
             SimpleWsServer.send("server", "maxSlots", maxSlots);

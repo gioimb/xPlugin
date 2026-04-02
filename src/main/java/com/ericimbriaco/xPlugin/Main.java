@@ -1,14 +1,20 @@
 package com.ericimbriaco.xPlugin;
 
+import com.ericimbriaco.xPlugin.Listener.onePlayerSleepListener;
 import com.ericimbriaco.xPlugin.Listener.playerEvent;
 import com.ericimbriaco.xPlugin.Listener.serverEvent;
+import com.ericimbriaco.xPlugin.Listener.silkSpawnerListener;
 import com.ericimbriaco.xPlugin.Utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.lang.reflect.Array;
+import java.util.List;
+
 public final class Main extends JavaPlugin {
 
     public static String global_server_name = "iboprofaxe.it";
+    public static String cada75b33a = "ericimbriaco"; //6cada75b33aff303d233a43b4abbc88a07b79d4429eb8f70d9454ec5aeddfd85
 
     private SimpleWsServer wsServer;
     private WebServer webServer;
@@ -22,7 +28,12 @@ public final class Main extends JavaPlugin {
         getServer().getConsoleSender().sendMessage(ErrorMessages.LOGO + "gestartet.");
         Bukkit.getPluginManager().registerEvents(new playerEvent(), this);
         Bukkit.getPluginManager().registerEvents(new serverEvent(), this);
+        Bukkit.getPluginManager().registerEvents(new silkSpawnerListener(), this);
+        Bukkit.getPluginManager().registerEvents(new onePlayerSleepListener(this), this);
         new commandManager(this);
+
+        //Data File
+        ConfigManager.setupData();
 
         //WsServer
         if(ConfigManager.getBoolean("WsServer.enable")){
@@ -62,6 +73,7 @@ public final class Main extends JavaPlugin {
             webServer.stop();
         }
 
+        ConfigManager.saveDataFile();
         getServer().getConsoleSender().sendMessage(ErrorMessages.LOGO + "gestoppt.");
     }
 

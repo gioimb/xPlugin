@@ -50,6 +50,7 @@ function connectWebSocket() {
             if (!players[name]) {
                 players[name] = {
                     name: name,
+                    money: "",
                     deaths: "",
                     health: "",
                     level: "",
@@ -71,6 +72,7 @@ function connectWebSocket() {
 
             if (
                 payload.type === "deaths" ||
+                payload.type === "money" ||
                 payload.type === "health" ||
                 payload.type === "level" ||
                 payload.type === "playTime" ||
@@ -114,6 +116,7 @@ function createRow(playerName) {
     tr.innerHTML = `
         <td class="col-id"></td>
         <td class="col-name"></td>
+        <td class="col-money"></td>
         <td class="col-health"></td>
         <td class="col-level"></td>
         <td class="col-deaths"></td>
@@ -136,6 +139,8 @@ function updateRow(playerName) {
     if (!row) return;
 
     row.querySelector(".col-name").textContent = player.name || "-";
+    row.querySelector(".col-money").textContent =
+        player.money === "" || player.money == null ? "-" : player.money;
     row.querySelector(".col-health").textContent =
         player.health === "" || player.health == null ? "-" : player.health;
     row.querySelector(".col-level").textContent =

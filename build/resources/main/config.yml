@@ -1,10 +1,18 @@
-serverName: "iboprofaxe.it"
+# xPlugin Config
+# Get default Config on: https://github.com/xPlugin/...
 
 # Color Codes examples: &6 -> Gold, &7 -> Gray, ...
 # Available placeholders:
 # %player%      -> Shows the Players Name
 # %servername%  -> Get the Servers Name
+# %money%       -> Get Players Money
 # To insert a line break (new line), use \n.
+
+
+serverName: "iboprofaxe.it"
+debug: true
+
+# ===> Custom Join and Leave Message
 # Here you can set custom Join and Leave Message.
 customJoinMessage:
   enable: true
@@ -15,14 +23,17 @@ customQuitMessage:
   enable: true
   message: "&c← &7%player%"
 
-# TabList
+
+# ===> Custom Tablist
+# Available placeholders: %servername%, %money%,
 tabList:
   header: ""
-  footer: "&7Du spielst auf &6%servername%"
+  footer: "&7Du spielst auf &6%servername% \n &7Kontostand: &6%money%"
 
+
+# ===> Custom MOTD
 # Here you can set a custom MOTD (Message of the Day) for your server.
 # If disabled (false), the default MOTD from server.properties will be used.
-#
 # Maximum characters per line: ~45–50
 # Available placeholders: %servername%
 customMotd:
@@ -30,14 +41,55 @@ customMotd:
   top: "A Minecraft Server"
   bottom: ""
 
+
+# ===> WebServer
 # To activate the web server, set "enable: true" and configure an open port. Do the same for the WebSocket server.
 # Note that stats can be sent to the interface when the web server and the websocket are running.
 WebServer:
-  enable: true       #default: true
-  port: 8080         #default: 8080
+  # default: true
+  enable: true
+  # default: 8080
+  port: 8080
 
+
+# ===> WebSocket Server
 WsServer:
-  enable: true      #default: true
-  port: 8082        #default: 8082
-  sendStats: true   #default: true
-  debug: true       #default: true
+  # default: true
+  enable: true
+  # default: 8082
+  port: 8082
+  # default: true
+  sendStats: true
+  # default: false
+  debug: true
+
+
+# ===> Bank
+bankAccounts:
+  currency: " CHF"
+
+# ===> Silk Spawner
+# Enable or disable spawner mining for all players.
+# If disabled, only players with the permission xplugin.break.spawner can mine spawners.
+silkSpawner:
+  enable: true          # default: true
+  # Here you can choose which pickaxes can be used to break spawners.
+  # If you want to deactivate a material, put a "#" before it.
+  material:
+#    - WOODEN_PICKAXE
+#    - STONE_PICKAXE
+#    - IRON_PICKAXE
+#    - GOLDEN_PICKAXE
+    - DIAMOND_PICKAXE
+    - NETHERITE_PICKAXE
+
+  # Set the Dropchance, default: 100
+  dropChange: 100
+
+
+# ===> One Player Sleep
+# When a player falls asleep, the time will be set to day and the weather will be cleared.
+# You can enable/disable the feature.
+onePlayerSleep:
+  # default: false
+  enable: false

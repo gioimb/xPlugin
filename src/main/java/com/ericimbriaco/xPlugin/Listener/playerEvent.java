@@ -46,6 +46,7 @@ public class playerEvent implements Listener {
 
         String tabListFooterMessage = ConfigManager.getString("tabList.footer");
         tabListFooterMessage = tabListFooterMessage.replace("%servername%", ConfigManager.getString("serverName"));
+        tabListFooterMessage = tabListFooterMessage.replace("%money%", String.valueOf(ConfigManager.get().getInt("Money." + getPlayer.getUniqueId())));
         tabListFooterMessage = ChatColor.translateAlternateColorCodes('&', tabListFooterMessage);
         event.getPlayer().setPlayerListFooter(tabListFooterMessage);
 
@@ -59,6 +60,12 @@ public class playerEvent implements Listener {
 
         int healthRounded = (int) Math.round(getPlayer.getHealth());
         SimpleWsServer.send(getPlayer.getName(), "health", healthRounded);
+
+        if (!ConfigManager.get().contains(getPlayer.getUniqueId() + ".money")) {
+            ConfigManager.get().set(getPlayer.getUniqueId() + ".money", 1000);
+            ConfigManager.saveDataFile();
+        }
+
     }
 
     @EventHandler

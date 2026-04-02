@@ -5,6 +5,8 @@ import org.bukkit.ChatColor;
 public class ErrorMessages {
     public static final String LOGO = ChatColor.DARK_PURPLE + "xPlugin: " + ChatColor.GRAY;
     public static final String LOGO_Error = ChatColor.DARK_PURPLE + "xPlugin Error: " + ChatColor.RED;
+    public static final String LOGO_Debug = ChatColor.DARK_PURPLE + "xPlugin Debug: " + ChatColor.YELLOW;
+    public static final String LOGO_BANK = ChatColor.GOLD + "Bank: " + ChatColor.WHITE;
 
     public static final String NotaPlayer = ChatColor.DARK_PURPLE + "xPlugin Error: " + ChatColor.RED + "Du musst ein Spieler sein um diesen Befehl nutzen zu können!";
     public static final String NoPermission = ChatColor.DARK_PURPLE + "xPlugin Error: " +  ChatColor.RED + "Du Spast hast keine Rechte um diesem Befehl zu benutzen!";

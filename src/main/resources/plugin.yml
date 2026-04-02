@@ -16,7 +16,26 @@ commands:
   crash:
     description: Kicks the player with a Java error message
     usage: /crash [Player]
-    permission: xplugin.command.crash.others
+    permission: xplugin.command.crash
+
+  repair:
+    description: Repair the tool the player is holding.
+    usage: /repair [Player]
+    permission: xplugin.command.repair
+
+  top:
+    description: Teleport to the highest block at your current position.
+    usage: /top [Player]
+    permission: xplugin.command.top
+
+  bank:
+    description: Bank
+    usage: /bank
+    permission: xplugin.command.bank
+  day:
+    description: Make Day
+    usage: /day
+    permission: xplugin.command.day
 
 
 permissions:
@@ -30,4 +49,46 @@ permissions:
 
   xplugin.command.crash:
     description: Kicks the player with a Java error message
+    default: true
+
+  xplugin.command.repair:
+    description: Repair the tool the player is holding.
+    default: op
+
+  xplugin.command.top:
+    description: Teleport to the highest block at your current position.
+    default: op
+
+  xplugin.break.spawner:
+    default: op
+
+  xplugin.command.bank:
+    description: Access to all bank commands
+    default: true
+    children:
+      xplugin.command.bank.help: true
+      xplugin.command.bank.pay: true
+      xplugin.command.bank.balance: true
+
+  xplugin.command.bank.help:
+    description: Allows /bank help
+    default: true
+
+  xplugin.command.bank.pay:
+    description: Allows /bank pay
+    default: true
+
+  xplugin.command.bank.balance:
+    description: Allows /bank balance
+    default: true
+
+  xplugin.command.bank.set:
+    description: Allows /bank set
+    default: op
+
+  xplugin.command.bank.give:
+    description: Allows /bank give
+    default: op
+  xplugin.command.day:
+    description: /day
     default: op

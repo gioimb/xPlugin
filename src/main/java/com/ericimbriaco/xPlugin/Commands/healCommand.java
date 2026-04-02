@@ -1,6 +1,6 @@
 package com.ericimbriaco.xPlugin.Commands;
 
-import com.ericimbriaco.xPlugin.Utils.ErrorMessages;
+import com.ericimbriaco.xPlugin.Utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -20,12 +20,12 @@ public class healCommand implements CommandExecutor {
 
         if(args.length == 0){
             if (!(sender instanceof Player)) {sender.sendMessage(ErrorMessages.NotaPlayer);return true;} // Check if Player is a Player
+            if (!sender.hasPermission("xplugin.command.heal")) {sender.sendMessage(ErrorMessages.NoPermission);return true;} //has Permission
 
             Player getplayer = (Player) sender;
-            if (!getplayer.hasPermission("xplugin.command.heal")) {getplayer.sendMessage(ErrorMessages.NoPermission);return true;} //has Permission
 
             healPlayer(getplayer);
-            getplayer.sendMessage(ErrorMessages.LOGO + "Du wurdest geheilt");
+            //getplayer.sendMessage(ErrorMessages.LOGO + "Du wurdest geheilt");
             return true;
         }
 
@@ -49,9 +49,7 @@ public class healCommand implements CommandExecutor {
 
 
     private void healPlayer(Player player) {
-        //Location location = player.getLocation();
-        //Sound sound = Sound.valueOf("ENTITY_PLAYER_LEVELUP");
-        //player.playSound(location, sound, 1.0f, 1.0f);
+        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1.0f, 1.0f);
 
         player.setHealth(player.getMaxHealth());
         player.setFoodLevel(20);
@@ -70,5 +68,8 @@ public class healCommand implements CommandExecutor {
                 player.removePotionEffect(type);
             }
         }
+
+        int healthRounded = (int) Math.round(player.getHealth());
+        SimpleWsServer.send(player.getName(), "health", healthRounded);
     }
 }
